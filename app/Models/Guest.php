@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Guest extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+        'user_id', 'username', 'nama', 'no_telepon', 'instansi',
+        'keperluan', 'keterangan'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
