@@ -7,6 +7,8 @@ use App\Http\Requests\StoreGuestRequest;
 use App\Models\Guest;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\GuestsExport;
 
 class GuestController extends Controller
 {
@@ -34,23 +36,61 @@ class GuestController extends Controller
     {
         $query = Guest::query();
 
-        if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
-        if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
+        // Default filter hari ini jika tidak ada filter
+        if (!$request->filled('from') && !$request->filled('to')) {
+            $query->whereDate('created_at', now()->toDateString());
+        } else {
+            if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
+            if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
+        }
+
         if ($request->filled('keperluan')) $query->where('keperluan', $request->keperluan);
 
-        $guests = $query->latest()->paginate(20);
+        $guests = $query->latest()->get(); // Ubah ke get() untuk DataTable client-side
         return view('guests.index', compact('guests'));
     }
 
     public function exportPdf(Request $request)
     {
         $query = Guest::query();
-        if ($request->filled('keperluan')) $query->where('keperluan', $request->keperluan);
-        if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
-        if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
 
-        $guests = $query->get();
+        // Filter sesuai dengan kondisi index
+        if (!$request->filled('from') && !$request->filled('to')) {
+            $query->whereDate('created_at', now()->toDateString());
+        } else {
+            if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
+            if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
+        }
+
+        if ($request->filled('keperluan')) $query->where('keperluan', $request->keperluan);
+
+        $guests = $query->latest()->get();
         $pdf = Pdf::loadView('guests.pdf', compact('guests'));
         return $pdf->download('buku-tamu-' . now()->format('YmdHis') . '.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $query = Guest::query();
+
+        // Filter sesuai dengan kondisi index
+        if (!$request->filled('from') && !$request->filled('to')) {
+            $query->whereDate('created_at', now()->toDateString());
+        } else {
+            if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
+            if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
+        }
+
+        if ($request->filled('keperluan')) $query->where('keperluan', $request->keperluan);
+
+        $guests = $query->latest()->get();
+
+        // Create Excel file
+        $fileName = 'buku-tamu-' . now()->format('YmdHis') . '.xlsx';
+
+        return Excel::download(
+            new GuestsExport($guests),
+            $fileName
+        );
     }
 }

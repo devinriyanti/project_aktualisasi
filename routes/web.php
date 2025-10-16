@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,9 @@ use App\Http\Controllers\GuestController;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('auth/login');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,8 +36,9 @@ Route::get('/buku-tamu', [GuestController::class, 'form'])->name('guests.form');
 Route::post('/buku-tamu', [GuestController::class, 'store'])->name('guests.store');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/guests', [GuestController::class, 'index'])->name('guests.index');
-    Route::get('/admin/guests/export', [GuestController::class, 'exportPdf'])->name('guests.export');
+    Route::get('/daftar-tamu', [GuestController::class, 'index'])->name('guests.index');
+    Route::get('/daftar-tamu/export-pdf', [GuestController::class, 'exportPdf'])->name('guests.export.pdf');
+    Route::get('/daftar-tamu/export-excel', [GuestController::class, 'exportExcel'])->name('guests.export.excel');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

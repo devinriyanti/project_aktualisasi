@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         // Redirect berdasarkan role
         if ($user->role === 'admin') {
-            return redirect()->route('guests.index'); // ke halaman admin (index buku tamu)
+            return redirect()->route('dashboard'); // ke dashboard admin
         }
 
         // Kalau bukan admin (user biasa)
@@ -47,11 +47,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        // Jika user adalah guest, redirect ke login
+        if ($user && $user->email === 'guest@bukutamu.local') {
+            return redirect()->route('login');
+        }
 
         return redirect('/');
     }
