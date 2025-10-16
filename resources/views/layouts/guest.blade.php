@@ -13,18 +13,35 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+                 .bg-biru-tua{
+                background-color: #1B2C5D;
+            }
+            .text-biru-tua{
+                color: #1B2C5D;
+            }
+            .bg-kuning-emas{
+                background-color: #FFCB05;
+            }
+            .text-kuning-emas{
+                color: #FFCB05;
+            }
+        </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-biru-tua">
+            
+            <div style="width: auto;height:auto;">
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
+                    <div></div>
+                    <img alt="Logo" src="{{ asset('brand/logo_3.png') }}" class="h-50px rounded-2" style="height: 150px;" />
                 </a>
             </div>
-
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
+
         </div>
     </body>
 </html>

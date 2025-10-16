@@ -13,9 +13,25 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            .bg-biru-tua{
+                background-color: #1B2C5D;
+            }
+            .text-biru-tua{
+                color: #1B2C5D;
+            }
+            .bg-kuning-emas{
+                background-color: #FFCB05;
+            }
+            .text-kuning-emas{
+                color: #FFCB05;
+            }
+       
+
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class=" bg-gray-100">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -28,7 +44,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main style="height: 100vh;">
                 @yield('content')
             </main>
         </div>
