@@ -26,7 +26,7 @@ class StoreGuestRequest extends FormRequest
             'nama' => 'required|string|max:255',
             'no_telepon' => 'required|string|max:50',
             'instansi' => 'nullable|string|max:255',
-            'keperluan' => 'required|in:Layanan Administrasi Hukum Umum,Layanan Kekayaan Intelektual,Layanan Pengaduan',
+            'keperluan' => 'required|in:Layanan Administrasi Hukum Umum,Layanan Kekayaan Intelektual,Layanan Pengaduan,Layanan Harmonisasi Ranperda/Ranperkada,Layanan Konsultasi Hukum,JDIH,Lain-lain',
             'keterangan' => 'nullable|string',
         ];
     }
