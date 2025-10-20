@@ -257,6 +257,10 @@
                                 <option>Layanan Administrasi Hukum Umum</option>
                                 <option>Layanan Kekayaan Intelektual</option>
                                 <option>Layanan Pengaduan</option>
+                                <option>Layanan Harmonisasi Ranperda/Ranperkada</option>
+                                <option>Layanan Konsultasi Hukum</option>
+                                <option>JDIH</option>
+                                <option>Lain-lain</option>
                             </select>
                         </div>
                         <div class="flex items-end gap-2">
@@ -293,7 +297,19 @@
                                     <tr>
                                         <td>{{ $guest->created_at->format('Y-m-d H:i') }}</td>
                                         <td>{{ $guest->nama }}</td>
-                                        <td>{{ $guest->no_telepon }}</td>
+                                        <td>
+                                            @php
+                             
+                                                $waNumber = preg_replace('/^0/', '62', $guest->no_telepon);
+                                            @endphp
+                                        
+                                            <a href="https://wa.me/{{ $waNumber }}" target="_blank" class="text-success">
+                                                {{ $guest->no_telepon }} <br>
+                                                <small>(Hubungi di WhatsApp)</small>
+                                            </a>
+                                        </td>
+                                        
+                                        {{-- <td>{{ $guest->no_telepon }}</td> --}}
                                         <td>{{ $guest->instansi }}</td>
                                         <td>{{ $guest->keperluan }}</td>
                                         <td>{{ $guest->keterangan }}</td>
