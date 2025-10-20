@@ -46,6 +46,15 @@
                                 <option>Layanan Administrasi Hukum Umum</option>
                                 <option>Layanan Kekayaan Intelektual</option>
                                 <option>Layanan Pengaduan</option>
+
+                                <option>Layanan Harmonisasi Ranperda/Ranperkada</option>
+                                <option>Layanan Konsultasi Hukum</option>
+                                <option>JDIH</option>
+                                <option>Lain-lain</option>
+
+
+
+                                
                             </select>
                         </div>
 

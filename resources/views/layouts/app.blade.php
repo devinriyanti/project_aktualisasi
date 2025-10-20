@@ -26,12 +26,21 @@
             .text-kuning-emas{
                 color: #FFCB05;
             }
-       
+            body {
+                background-image: 
+                    linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)), 
+                    url('{{ asset("brand/bgbg.jpeg") }}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+
 
         </style>
     </head>
     <body class="font-sans antialiased">
-        <div class=" bg-gray-100">
+        <div class=" bg-gray-100d">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

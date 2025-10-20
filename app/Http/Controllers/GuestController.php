@@ -14,13 +14,13 @@ class GuestController extends Controller
 {
     public function form()
     {
-        if (!Auth::check()) {
-            $user = \App\Models\User::firstOrCreate(
-                ['email' => 'guest@bukutamu.local'],
-                ['name' => 'Guest User', 'password' => bcrypt('guestpass'), 'role' => 'user']
-            );
-            Auth::login($user);
-        }
+        // if (!Auth::check()) {
+        //     $user = \App\Models\User::firstOrCreate(
+        //         ['email' => 'guest@bukutamu.local'],
+        //         ['name' => 'Guest User', 'password' => bcrypt('guestpass'), 'role' => 'user']
+        //     );
+        //     Auth::login($user);
+        // }
 
         $todayCount = Guest::whereDate('created_at', now()->toDateString())->count();
         return view('guests.form', compact('todayCount'));
