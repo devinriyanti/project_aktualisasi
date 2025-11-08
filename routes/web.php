@@ -37,6 +37,7 @@ Route::post('/buku-tamu', [GuestController::class, 'store'])->name('guests.store
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/daftar-tamu', [GuestController::class, 'index'])->name('guests.index');
+    Route::delete('/daftar-tamu/destroy/{id}', [GuestController::class, 'destroy'])->name('guests.destroy');
     Route::get('/daftar-tamu/export-pdf', [GuestController::class, 'exportPdf'])->name('guests.export.pdf');
     Route::get('/daftar-tamu/export-excel', [GuestController::class, 'exportExcel'])->name('guests.export.excel');
 });

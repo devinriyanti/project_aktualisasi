@@ -290,6 +290,7 @@
                                     <th>Instansi</th>
                                     <th>Keperluan</th>
                                     <th>Keterangan</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -313,6 +314,11 @@
                                         <td>{{ $guest->instansi }}</td>
                                         <td>{{ $guest->keperluan }}</td>
                                         <td>{{ $guest->keterangan }}</td>
+                                        <td>
+                                            <button onclick="deleteData('{{ encrypt($guest->id) }}')" type="button" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Hapus
+                                            </button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -326,7 +332,7 @@
     <!-- jQuery dan DataTable JS -->
     <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             $('#guests-table').DataTable({
@@ -356,4 +362,56 @@
             });
         });
     </script>
+
+<script>
+    function deleteData(data){
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Menghapus Data Tamu",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let url = "{{ route('guests.destroy', ':id') }}".replace(':id', data)
+                $.ajax({
+                    url: url,
+                    method: "DELETE",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function(response) {
+
+                        if (response.status == 'success') {
+                            Swal.fire({
+                                title: response.msg,
+                                icon: 'success',
+                                confirmButtonText: "Oke"
+                            }).then(function(result) {
+                                window.location.reload()
+                            });
+
+                        } else {
+                            Swal.fire({
+                                title: response.msg,
+                                icon: 'error',
+                                confirmButtonText: "Oke"
+                            })
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Failed, Server Error',
+                            icon: 'error',
+                            confirmButtonText: "Oke"
+                        })
+                    }
+                });
+            }
+        })
+    }
+</script>
 @endsection

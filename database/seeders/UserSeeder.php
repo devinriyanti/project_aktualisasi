@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         User::firstOrCreate(
             ['email' => 'admin@domain.local'],
-            ['name' => 'Admin', 'password' => bcrypt('password'), 'role' => 'admin']
+            ['name' => 'Admin',   'username'=>'adminkalsel', 'password' => bcrypt('password'), 'role' => 'admin']
         );
     }
 }

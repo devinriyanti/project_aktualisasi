@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\GuestsExport;
+use Carbon\Carbon;
 
 class GuestController extends Controller
 {
@@ -28,7 +29,20 @@ class GuestController extends Controller
 
     public function store(StoreGuestRequest $request)
     {
-        Guest::create(array_merge($request->validated(), ['user_id' => Auth::id()]));
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        
+        if ($request->filled('date')) {
+            $data['created_at'] = $request->date . ' 00:00:00';
+        }
+    
+        $guest = Guest::create($data);
+
+        if ($request->filled('date')) {
+            // $guest->created_at = $request->date . " 00:00:00";
+            $guest->created_at = Carbon::parse($request->date);
+            $guest->save();
+        }
         return back()->with('success', 'Terima kasih, data tamu tersimpan.');
     }
 
@@ -93,4 +107,17 @@ class GuestController extends Controller
             $fileName
         );
     }
+
+    public function destroy($id)
+    {
+        try {
+            $id = decrypt($id);
+            $guest = Guest::find($id);
+            $guest->delete();
+            return response()->json(array('status' => 'success','msg' => 'Berhasil Hapus Guest'), 200);
+        } catch (\Throwable $e) {
+            return response()->json(array('status' => 'error','msg' => 'Gagal Hapus Tamu','err'=>$e->getMessage()), 500);
+        }
+    }
+
 }
