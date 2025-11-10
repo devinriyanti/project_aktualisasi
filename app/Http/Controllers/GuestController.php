@@ -70,7 +70,7 @@ class GuestController extends Controller
 
         // Filter sesuai dengan kondisi index
         if (!$request->filled('from') && !$request->filled('to')) {
-            $query->whereDate('created_at', now()->toDateString());
+            // $query->whereDate('created_at', now()->toDateString());
         } else {
             if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
             if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
@@ -89,7 +89,7 @@ class GuestController extends Controller
 
         // Filter sesuai dengan kondisi index
         if (!$request->filled('from') && !$request->filled('to')) {
-            $query->whereDate('created_at', now()->toDateString());
+            // $query->whereDate('created_at', now()->toDateString());
         } else {
             if ($request->filled('from')) $query->whereDate('created_at', '>=', $request->from);
             if ($request->filled('to')) $query->whereDate('created_at', '<=', $request->to);
