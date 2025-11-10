@@ -78,7 +78,7 @@ class GuestController extends Controller
 
         if ($request->filled('keperluan')) $query->where('keperluan', $request->keperluan);
 
-        $guests = $query->latest()->orderBy('created_at', 'asc')->get();
+        $guests = $query->orderBy('created_at', 'asc')->get();
         $pdf = Pdf::loadView('guests.pdf', compact('guests'));
         return $pdf->download('buku-tamu-' . now()->format('YmdHis') . '.pdf');
     }
@@ -97,7 +97,7 @@ class GuestController extends Controller
 
         if ($request->filled('keperluan')) $query->where('keperluan', $request->keperluan);
 
-        $guests = $query->latest()->orderBy('created_at', 'asc')->get();
+        $guests = $query->orderBy('created_at', 'asc')->get();
 
         // Create Excel file
         $fileName = 'buku-tamu-' . now()->format('YmdHis') . '.xlsx';
