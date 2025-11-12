@@ -86,6 +86,12 @@
                             </button>
                         </div>
                     </form>
+
+                    {{-- Img --}}
+                    <br>
+                    <div class="py-5 mt-5">
+                        <img src="{{ asset('brand/barcode.png') }}" class=" img-fluid rounded" alt="">
+                    </div>
                 </div>
             </div>
         </div>
