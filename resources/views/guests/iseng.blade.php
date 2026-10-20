@@ -297,14 +297,15 @@
         </p>
 
         <!-- Tombol WhatsApp Devina -->
+        {{-- href="https://wa.me/6282237027230?text=Halo%20Devina%2C%20saya%20ingin%20mengaktifkan%20kembali%20website%20saya." --}}
         <a
             class="whatsapp-button"
-            href="https://wa.me/6282237027230?text=Halo%20Devina%2C%20saya%20ingin%20mengaktifkan%20kembali%20website%20saya."
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
         >
             <i class="fa-brands fa-whatsapp"></i>
-            Hubungi Devina via WhatsApp
+            Hubungi Devina 
         </a>
 
         <!-- Footer -->
