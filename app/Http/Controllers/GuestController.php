@@ -23,8 +23,10 @@ class GuestController extends Controller
         //     Auth::login($user);
         // }
 
-        $todayCount = Guest::whereDate('created_at', now()->toDateString())->count();
-        return view('guests.form', compact('todayCount'));
+        // $todayCount = Guest::whereDate('created_at', now()->toDateString())->count();
+        // return view('guests.form', compact('todayCount'));
+        return view('guests.iseng');
+
     }
 
     public function store(StoreGuestRequest $request)
